@@ -1,0 +1,18 @@
+{
+	"autoload": {
+		"psr-4": {
+			"model\\": "model/",
+			"controller\\": "controller/",
+			"schema\\": "schema/",
+			"config\\": "config/"
+		},
+		"files": ["config/secret.php"]
+	},
+	"name": "composer/note",
+	"description": "",
+	"require": {
+		"ext-pdo": "*",
+      "ext-json": "*",
+		"firebase/php-jwt": "^5.2"
+    }
+}
