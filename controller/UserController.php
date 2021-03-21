@@ -42,13 +42,12 @@
                 $jwt = JWT::encode($payload, JWT_KEY);
                 return array(
                     'status' => true,
-                    'token' => $jwt
+                    'token' => $jwt,
+                    'id' => $response['data']['id'],
+                    'user' => $response['data']['user']
                 );
             }else{
-                return array(
-                    'status' => false,
-                    'message' => $response['message']
-                );
+                return $response;
             }
 
 

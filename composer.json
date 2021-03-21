@@ -4,7 +4,8 @@
 			"model\\": "model/",
 			"controller\\": "controller/",
 			"schema\\": "schema/",
-			"config\\": "config/"
+			"config\\": "config/",
+			"http\\": "Http/"
 		},
 		"files": ["config/secret.php"]
 	},

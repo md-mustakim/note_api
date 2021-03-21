@@ -19,6 +19,10 @@ class ComposerStaticInit839799fd9f7fc4ca30596fb543f105f3
         array (
             'model\\' => 6,
         ),
+        'h' => 
+        array (
+            'http\\' => 5,
+        ),
         'c' => 
         array (
             'controller\\' => 11,
@@ -38,6 +42,10 @@ class ComposerStaticInit839799fd9f7fc4ca30596fb543f105f3
         'model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/model',
+        ),
+        'http\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Http',
         ),
         'controller\\' => 
         array (

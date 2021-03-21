@@ -25,19 +25,21 @@
         }
 
         public function login($data): array {
-            $sql = "SELECT * FROM `users` where `email` LIKE '".$data->id."'";
+            $sql = "SELECT * FROM `users` where `email` LIKE '$data->id' OR `user` LIKE '$data->id'";
             $stmt = $this->connection->prepare($sql);
-            $searchResult = $stmt->fetchAll();
+            $stmt->execute();
+            $searchResult = $stmt->fetch();
             $count = $stmt->rowCount();
-            if($count === 0 ){
+
+            if($count === 0){
                 return array(
                     'status' => false,
-                    'message' => 'No User Found '.$sql
+                    'message' => 'No User Found',
+                    'sql' => $sql
                 );
             }else{
                 $db_pass = $searchResult['pass'];
-                $input_pass = password_hash($data->pass, PASSWORD_DEFAULT);
-                if($db_pass == $input_pass){
+                if(password_verify($data->pass,$db_pass)){
                     return array(
                         'status' => true,
                         'data' => $searchResult

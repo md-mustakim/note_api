@@ -1,3 +1,4 @@
 <?php
 
-    echo json_encode($_SERVER['HTTP_USER_AGENT']);
+    require "../vendor/autoload.php";
+
