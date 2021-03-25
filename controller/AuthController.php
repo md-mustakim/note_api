@@ -1,5 +1,9 @@
 <?php
     namespace controller;
+    use Exception;
+    use Firebase\JWT\JWT;
+    use http\Env\Response;
+    use Http\json;
     class AuthController{
 
 
@@ -40,12 +44,33 @@
             return null;
         }
 
-        public function authCheck(){
+        public function authCheck() {
             $token = $this->getBearerToken();
             if($token === null){
-                return http_response_code(401);
-            }else{
+                $myHttp = new json();
 
+                return $myHttp->response(401);
+            }else{
+                try{
+                    $userData = JWT::decode($this->getBearerToken(), JWT_PASS, array('HS256'));
+                    //echo json_encode(array("Token is Valid"));
+                    $secureUserData = array(
+                        'userInfo' => $userData
+                    );
+
+                    http_response_code(200);
+
+                }catch(Exception $e)
+                {
+                    $auth = array(
+                        'status' => false,
+                        'error' => $e->getMessage(),
+                        'invalidToken' => $this->getBearerToken()
+                    );
+                    http_response_code(401);
+                    echo json_encode($auth);
+                    return $auth;
+                }
             }
         }
     }

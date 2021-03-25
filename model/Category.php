@@ -38,7 +38,8 @@
             try {
                 $sql = "SELECT * FROM categories";
                 $stmt = $this->connection->prepare($sql);
-                $res = $stmt->execute();
+                 $stmt->execute();
+                $res = $stmt->fetchAll();
                 return array('status' => true, 'data' =>$res);
             }catch (PDOException $PDOException){
                 return array('status' => false, 'error' => $PDOException);

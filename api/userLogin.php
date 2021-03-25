@@ -20,7 +20,9 @@
                      echo json_encode($response);
                  }
             }else{
-                echo json_encode(array('parameter missing'));
+
+                echo json_encode(array('status' => false, 'message' => 'parameter missing', 'data' => $json_data));
+                http_response_code(200);
             }
         }
     }else{
