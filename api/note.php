@@ -5,7 +5,7 @@
     use Controller\NoteController;
 
     $header = new Header();
-    $header->header();;
+    $header->header();
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         $jsom_data = json_decode("php://input");
@@ -18,4 +18,14 @@
                 'message' => 'Empty Body'
             ));
         }
+    }else{
+        if(isset($_GET['view'])){
+            $noteController = new NoteController();
+            echo json_encode($noteController->view());
+        }
+        if(isset($_GET['show']) && isset($_GET['id'])){
+            $noteController = new NoteController();
+            echo json_encode($noteController->show($_GET['id']));
+        }
+
     }
