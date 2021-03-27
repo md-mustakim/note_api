@@ -13,10 +13,14 @@
 
         public function create(array $values): array{
             try {
-                $sql = "INSERT INTO note (category_id, label, note_data, old_data, change_count) VALUES (?,?,?,?,?)";
+                $sql = "INSERT INTO note (user_id, category_id, note_data, change_count) VALUES (?,?,?,?)";
                 $stmt = $this->connection->prepare($sql);
-                $stmt->execute($values);
-                return array('status' => true, 'message' => 'create success');
+                $status = $stmt->execute($values);
+                if($status){
+                    return array('status' => true, 'message' => 'create success');
+                }else{
+                    return array('status' => false, 'message' => 'keyword mistake');
+                }
             } catch (PDOException $PDOException) {
                 return array('status' => false, 'message' => $PDOException);
             }
@@ -43,6 +47,18 @@
                 $res = $stmt->fetch();
                 http_response_code(201);
                 return array('status' => true, 'data' => $res);
+            } catch (PDOException $PDOException) {
+                return array('status' => false, 'message' => $PDOException);
+            }
+        }
+        public function showByCategory(int $categoryId): array{
+            try {
+                $sql = "SELECT * FROM note where `category_id` =".$categoryId;
+                $stmt = $this->connection->prepare($sql);
+                $stmt->execute();
+                $res = $stmt->fetchAll();
+                http_response_code(200);
+                return array('status' => true, 'data' => $res, 'qu' => $sql);
             } catch (PDOException $PDOException) {
                 return array('status' => false, 'message' => $PDOException);
             }

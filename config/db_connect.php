@@ -15,7 +15,7 @@
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::ATTR_EMULATE_PREPARES   => false,
                 ];
-                return new PDO("mysql:host=".HOST.";dbname=".DB, DB_USER, DB_PASS, $options);
+                return new PDO("mysql:host=".HOST.";dbname=".DB.";charset=utf8mb4;", DB_USER, DB_PASS, $options);
             }
             catch (PDOException $exception)
             {

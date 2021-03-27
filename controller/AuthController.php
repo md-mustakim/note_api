@@ -2,11 +2,8 @@
     namespace controller;
     use Exception;
     use Firebase\JWT\JWT;
-    use http\Env\Response;
-    use Http\json;
+
     class AuthController{
-
-
 
         /**
          * Get header Authorization
@@ -44,33 +41,47 @@
             return null;
         }
 
+        private function tokenDecode(bool $getId = false): array
+        {
+            try{
+                $userData = JWT::decode($this->getBearerToken(), JWT_KEY, array('HS256'));
+                if ($getId){
+                    return array(
+                        'status' => true,
+                        'userData' => $userData
+                    );
+                }else
+
+                return array(
+                    'status' => true
+                );
+
+            }catch(Exception $e)
+            {
+                return array(
+                    'status' => false,
+                    'error' => $e->getMessage(),
+                );
+            }
+        }
+
+        public function getUserId(): object{
+            $userData = $this->tokenDecode(true);
+            return $userData['userData']->userData;
+        }
+
         public function authCheck() {
             $token = $this->getBearerToken();
             if($token === null){
-                $myHttp = new json();
-
-                return $myHttp->response(401);
+                http_response_code(401);
+                echo json_encode(array('status' => false, 'message' => 'Bearer Token Required'));
+                exit();
             }else{
-                try{
-                    $userData = JWT::decode($this->getBearerToken(), JWT_PASS, array('HS256'));
-                    //echo json_encode(array("Token is Valid"));
-                    $secureUserData = array(
-                        'userInfo' => $userData
-                    );
-
-                    http_response_code(200);
-
-                }catch(Exception $e)
-                {
-                    $auth = array(
-                        'status' => false,
-                        'error' => $e->getMessage(),
-                        'invalidToken' => $this->getBearerToken()
-                    );
-                    http_response_code(401);
-                    echo json_encode($auth);
-                    return $auth;
-                }
+               if (!$this->tokenDecode()['status']){
+                   http_response_code(401);
+                   echo json_encode($this->tokenDecode());
+                   exit();
+               }
             }
         }
     }

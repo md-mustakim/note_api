@@ -1,5 +1,5 @@
 <?php
-namespace Controller;
+namespace controller;
 class Header{
     public function header(){
         header("Content-Type: application/json; charset: UTF-8");
