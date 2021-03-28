@@ -74,5 +74,16 @@
                 return array('status' => false, 'message' => $PDOException);
             }
         }
+        public function deleteByCategory(int $categoryId): array{
+            try {
+                $sql = "DELETE FROM note where `category_id` = ".$categoryId;
+                $stmt = $this->connection->prepare($sql);
+                $response = $stmt->execute();
+                http_response_code(200);
+                return array('status' => $response, 'data' => 'Delete success');
+            } catch (PDOException $PDOException) {
+                return array('status' => false, 'message' => $PDOException);
+            }
+        }
 
     }

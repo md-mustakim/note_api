@@ -1,9 +1,12 @@
 <?php
-    use controller\UserController;
+
+use controller\Header;
+use controller\UserController;
 
     require "../vendor/autoload.php";
     $userController = new UserController();
-
+    $header = new Header();
+    $header->header();
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $json_data = json_decode(file_get_contents("php://input"));

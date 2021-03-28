@@ -34,7 +34,7 @@
             }
 
         }
-        public function view(): array{
+        public function view($userId): array{
             try {
                 $sql = "SELECT * FROM categories";
                 $stmt = $this->connection->prepare($sql);

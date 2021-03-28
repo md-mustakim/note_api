@@ -1,6 +1,8 @@
 <?php
     namespace controller;
     require '../vendor/autoload.php';
+
+    use model\Activity;
     use model\User;
     use Firebase\JWT\JWT;
     require "../vendor/autoload.php";
@@ -11,7 +13,6 @@
 
         public function store($data): bool
         {
-
             $user = new User();
          return $user->create($data);
         }
@@ -40,6 +41,8 @@
                     'userData' => $response['data']
                 );
                 $jwt = JWT::encode($payload, JWT_KEY);
+                $activity = new Activity();
+                $activity->create($response['data']['id'], 'login', 'login to account');
                 return array(
                     'status' => true,
                     'token' => $jwt,

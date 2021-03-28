@@ -1,6 +1,7 @@
 <?php
     namespace controller;
     use model\Category;
+    use model\Note;
 
 
     class CategoryController{
@@ -53,12 +54,14 @@
             return $categoryModel->show($id);
         }
 
-        public function view(): array{
+        public function view(int $userId): array{
             $categoryModel = new Category();
-            return $categoryModel->view();
+            return $categoryModel->view($userId);
         }
         public function delete(int $id): array{
             $categoryModel = new Category();
+            $noteModel = new Note();
+            $noteModel->deleteByCategory($id);
             return $categoryModel->delete($id);
         }
     }
