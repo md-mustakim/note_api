@@ -82,7 +82,7 @@
                 http_response_code(200);
                 return array('status' => $response, 'data' => 'Delete success');
             } catch (PDOException $PDOException) {
-                return array('status' => false, 'message' => $PDOException);
+                return array('status' => false, 'error' => $PDOException);
             }
         }
 

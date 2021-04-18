@@ -77,7 +77,27 @@
         public function delete(int $id): array{
             $categoryModel = new Category();
             $noteModel = new Note();
-            $noteModel->deleteByCategory($id);
-            return $categoryModel->delete($id);
+            $noteDeleteStatus = $noteModel->deleteByCategory($id);
+            if ($noteDeleteStatus['status'])
+            {
+                $categoryDeleteStatus = $categoryModel->delete($id);
+               if ($categoryDeleteStatus['status']){
+                   return array(
+                       'status' => true,
+                       'message' => 'Delete Success'
+                   );
+               }else{
+                   return array(
+                       'status' => true,
+                       'error' => $categoryDeleteStatus['error']
+                   );
+               }
+            }else{
+                return array(
+                    'status' => true,
+                    'error' => $noteDeleteStatus['error']
+                );
+            }
+
         }
     }

@@ -20,6 +20,10 @@
     }elseif($_SERVER['REQUEST_METHOD'] === 'DELETE'){
         if(isset($_GET['id'])){
             $id = $_GET['id'];
+            $categoryController = new CategoryController();
+            echo json_encode($categoryController->delete($id));
+        }else{
+            echo json_encode(['Category id is required']);
         }
     }
 
@@ -37,4 +41,5 @@
             $categoryController = new CategoryController();
             echo json_encode($categoryController->delete($_GET['id']));
         }
+
     }
