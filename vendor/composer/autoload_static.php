@@ -17,6 +17,7 @@ class ComposerStaticInit839799fd9f7fc4ca30596fb543f105f3
         ),
         'm' => 
         array (
+            'module\\' => 7,
             'model\\' => 6,
         ),
         'h' => 
@@ -38,6 +39,10 @@ class ComposerStaticInit839799fd9f7fc4ca30596fb543f105f3
         'schema\\' => 
         array (
             0 => __DIR__ . '/../..' . '/schema',
+        ),
+        'module\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Module',
         ),
         'model\\' => 
         array (

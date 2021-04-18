@@ -2,9 +2,10 @@
     namespace controller;
     use model\Category;
     use model\Note;
+    use module\Controller\BaseController;
 
 
-    class CategoryController{
+    class CategoryController extends BaseController {
         public function __construct(){
         }
         public function validator(Object $input, Array $rule): array{
@@ -56,7 +57,22 @@
 
         public function view(int $userId): array{
             $categoryModel = new Category();
-            return $categoryModel->view($userId);
+            $categoryModelData = $categoryModel->view($userId);
+            if ($categoryModelData['status']){
+                $newItem = array();
+                foreach ($categoryModelData['data'] as $item){
+                    $item['time'] = $item['reg_time'];
+                    $item['reg_time'] = $this->time_elapsed_string($item['reg_time']);
+                    array_push($newItem,$item);
+                }
+                return array(
+                    'status' => true,
+                    'data' => $newItem
+                );
+            }else{
+                return $categoryModel->view($userId);
+            }
+
         }
         public function delete(int $id): array{
             $categoryModel = new Category();

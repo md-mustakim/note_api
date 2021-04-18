@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/config" isTestSource="false" packagePrefix="config\" />
       <sourceFolder url="file://$MODULE_DIR$/schema" isTestSource="false" packagePrefix="schema\" />
       <sourceFolder url="file://$MODULE_DIR$/Http" isTestSource="false" packagePrefix="http\" />
+      <sourceFolder url="file://$MODULE_DIR$/Module" isTestSource="false" packagePrefix="module\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/firebase/php-jwt" />
     </content>

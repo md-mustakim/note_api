@@ -5,7 +5,8 @@
 			"controller\\": "controller/",
 			"schema\\": "schema/",
 			"config\\": "config/",
-			"http\\": "Http/"
+			"http\\": "Http/",
+			"module\\": "Module/"
 		},
 		"files": ["config/secret.php"]
 	},

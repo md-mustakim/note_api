@@ -3,9 +3,10 @@ namespace controller;
 
 use config\db_connect;
 use model\Note;
+use module\Controller\BaseController;
 use PDO;
 
-class NoteController{
+class NoteController extends BaseController {
     public PDO $connection;
     public function __construct()
     {
@@ -54,22 +55,75 @@ class NoteController{
 
     public function view():array{
         $noteModel = new Note();
-        return $noteModel->view();
+        $viewMultipleArray = $noteModel->view();
+        if ($viewMultipleArray['status']){
+            $newArray = array();
+            foreach ($viewMultipleArray['data'] as $item)
+            {
+                $item['reg_time'] = $this->time_elapsed_string($item['reg_time']);
+                array_push($newArray, $item);
+            }
+            return array(
+                'status' => true,
+                'data' => $newArray
+            );
+        }else{
+            return $noteModel->view();
+        }
+
     }
+
     public function show(int $id):array{
         $noteModel = new Note();
-        return $noteModel->show($id);
+        $singleArray = $noteModel->show($id);
+
+
+        if ($singleArray['status'] === true){
+            $oldTime = $singleArray['data']['reg_time'];
+            $newTime = $this->time_elapsed_string($oldTime);
+            $replaceItem = array('reg_time' => $newTime);
+            return array(
+                'status' => true,
+                'data' => array_replace($singleArray['data'], $replaceItem)
+            );
+        }else{
+            return array(
+                'status' => false,
+            );
+        }
     }
     public function showByCategory(int $categoryId):array{
         $noteModel = new Note();
         $categoryModel = new CategoryController();
         $singleCategoryById = $categoryModel->show($categoryId);
         $noteData = $noteModel->showByCategory($categoryId);
-        return array(
-            'status' => true,
-            'category_name' => $singleCategoryById,
-            'note_data' => $noteData
-        );
+        if ($noteData['status'])
+        {
+            $dataItem = array();
+            foreach ($noteData['data'] as $item){
+                $item['time'] = $item['reg_time'];
+                $item['reg_time'] = $this->time_elapsed_string($item['reg_time']);
+                array_push($dataItem, $item);
+            }
+            return array(
+                'status' => true,
+                'category_name' => $singleCategoryById,
+                'note_data' => array(
+                    'status' => true,
+                    'data' => $dataItem
+                )
+            );
+        }else{
+            return array(
+                'status' => false,
+                'category_name' => $singleCategoryById,
+                'note_data' => $noteData
+            );
+        }
+
+
+
+
     }
 
     public function delete(int $id):array{

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'schema\\' => array($baseDir . '/schema'),
+    'module\\' => array($baseDir . '/Module'),
     'model\\' => array($baseDir . '/model'),
     'http\\' => array($baseDir . '/Http'),
     'controller\\' => array($baseDir . '/controller'),

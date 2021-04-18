@@ -1,9 +1,10 @@
 <?php
     require "../vendor/autoload.php";
 
-use controller\AuthController;
-use controller\CategoryController;
+    use controller\AuthController;
+    use controller\CategoryController;
     use controller\header;
+
     $header = new header();
     $header->header();
     $authController = new AuthController();

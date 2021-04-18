@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'db26c54a11138e20f4b2c3ca8eb30618567bfc62',
+    'reference' => 'dcd759058fcd460ea985709b8d8a5df1792d233c',
     'name' => 'composer/note',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'db26c54a11138e20f4b2c3ca8eb30618567bfc62',
+      'reference' => 'dcd759058fcd460ea985709b8d8a5df1792d233c',
     ),
     'firebase/php-jwt' => 
     array (
