@@ -3,9 +3,9 @@
 
     use controller\AuthController;
     use controller\CategoryController;
-    use controller\header;
+    use controller\Header;
 
-    $header = new header();
+    $header = new Header();
     $header->header();
     $authController = new AuthController();
     $authController->authCheck();

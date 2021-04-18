@@ -52,6 +52,19 @@ class NoteController extends BaseController {
         }
     }
 
+    public function update(array $array,int $id): array
+    {
+        if (!isset($array['note_data']) && !isset($id)){
+            return array(
+                'status' => false,
+                'error' => 'Note Data Not Found'
+            );
+        }else{
+            $noteModel = new Note();
+            return $noteModel->update($array, $id);
+        }
+    }
+
 
     public function view():array{
         $noteModel = new Note();

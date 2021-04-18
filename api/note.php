@@ -13,15 +13,22 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         $jsom_data = json_decode(file_get_contents("php://input"));
-        if(!empty($jsom_data)){
-            $noteController = new NoteController();
-            echo json_encode($noteController->create($jsom_data, $userId));
-        }else{
-            echo json_encode(array(
-                'status' => false,
-                'message' => 'Empty Body'
-            ));
-        }
+       if (isset($_GET['save']))
+       {
+           if(!empty($jsom_data)){
+               $noteController = new NoteController();
+               echo json_encode($noteController->create($jsom_data, $userId));
+           }else{
+               echo json_encode(array(
+                   'status' => false,
+                   'message' => 'Empty Body'
+               ));
+           }
+       }
+       if (isset($_GET['update']) && isset($_GET['id'])){
+           $noteController = new NoteController();
+           echo json_encode($noteController->update((array)$jsom_data, $_GET['id']));
+       }
     }else{
         if(isset($_GET['view'])){
             $noteController = new NoteController();

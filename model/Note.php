@@ -27,6 +27,26 @@
 
         }
 
+        public function update(array $array, int $id): array
+        {
+            try {
+                $values = array(
+                    $array['note_data'],
+                    $id
+                );
+                $sql = "UPDATE `note` SET `note_data` = ? WHERE `note`.`id` = ?";
+                $stmt = $this->connection->prepare($sql);
+                $status = $stmt->execute($values);
+                if($status){
+                    return array('status' => true, 'message' => 'create success');
+                }else{
+                    return array('status' => false, 'message' => 'keyword mistake');
+                }
+            }catch (PDOException $PDOException){
+                return array('status' => false, 'message' => $PDOException);
+            }
+        }
+
 
         public function view():array{
             try {
