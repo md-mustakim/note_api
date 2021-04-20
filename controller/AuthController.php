@@ -2,6 +2,7 @@
     namespace controller;
     use Exception;
     use Firebase\JWT\JWT;
+    use model\User;
 
     class AuthController{
 
@@ -82,6 +83,74 @@
                    echo json_encode($this->tokenDecode());
                    exit();
                }
+            }
+        }
+
+        public function verifyPassword(int $userId, $plainPassword): array
+        {
+            $userModel = new User();
+            $userData = $userModel->show($userId);
+            if ($userData['status']){
+                $hashPassword = $userData['data']['pass'];
+                if (password_verify($plainPassword, $hashPassword)){
+                    return array(
+                        'status' => true
+                    );
+                }else{
+                    return array(
+                        'status' => false,
+                        'error' => 'Old Password does not match'
+                    );
+                }
+            }else{
+                return array(
+                    'status' => false,
+                    'error' => 'User Not Found'
+                );
+            }
+        }
+
+        public function reset(array $values, int $userId): array
+        {
+            if (isset($values['old_password']) && isset($values['new_password']) && isset($values['confirm_password'])){
+                if ($values['new_password'] == $values['confirm_password']){
+                    $new_password = $values['new_password'];
+                    $auth = new User();
+                    $passwordVerify =$this->verifyPassword($userId,$values['old_password']);
+                    if ($passwordVerify['status']){
+                        $resetStatus = $auth->passwordReset([password_hash($new_password, PASSWORD_DEFAULT), $userId]);
+                        if ($resetStatus['status']){
+                         return array(
+                             'status' => true,
+                             'message' => 'Password Change Success'
+                         );
+                        }else{
+                            return array(
+                                'status' => false,
+                                'error' => $resetStatus['error']
+                            );
+                        }
+
+                    }else{
+                        return array(
+                            'status' => false,
+                            'error' => $passwordVerify['error']
+
+                        );
+                    }
+
+                }else{
+                    return array(
+                        'status' => false,
+                        'error' => 'Password Confirm failed'
+                    );
+                }
+            }else{
+                return array(
+                    'status' => false,
+                    'error' => 'We can not found array perfectly',
+                    'response' => $values
+                );
             }
         }
     }

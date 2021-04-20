@@ -12,13 +12,7 @@
             {
                  $user = new UserController();
                  $response = $user->login($json_data->login, $_SERVER['HTTP_HOST']);
-                 if($response['status']){
-                     http_response_code(200);
-                     echo json_encode($response);
-                 }else{
-                     http_response_code(200);
-                     echo json_encode($response);
-                 }
+                echo json_encode($response);
             }else{
 
                 echo json_encode(array('status' => false, 'message' => 'parameter missing', 'data' => $json_data));

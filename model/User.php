@@ -2,6 +2,7 @@
     namespace model;
     use config\db_connect;
     use PDO;
+    use PDOException;
 
     require "../vendor/autoload.php";
     class User{
@@ -51,8 +52,41 @@
                     );
                 }
             }
+        }
 
+        public function show(int $id): array
+        {
+            try {
+                $sql = "SELECT * FROM `users` where id  = ?";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->execute(array($id));
+                return  array(
+                    'status' => true,
+                    'data' => $stmt->fetch()
+                );
+            }catch (PDOException $PDOException){
+                return array(
+                    'status' => false,
+                    'error' => $PDOException
+                );
+            }
+        }
 
+        public function passwordReset(array $values): array
+        {
+            try {
+                $sql = "UPDATE `users` SET `pass` = ? where id = ?";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->execute($values);
+                return array(
+                    'status' => true
+                );
+            }catch (PDOException $PDOException){
+                return array(
+                    'status' => false,
+                    'errors' => $PDOException
+                );
+            }
         }
     }
 
