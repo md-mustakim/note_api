@@ -1,3 +1,6 @@
+# Note / Personal Dairy 
+##### This is basically made with Raw PHP (No FrameWork) API (REST) based Application, Here some API Endpoint
+
 ## User Registration
 
 `{
